@@ -1,9 +1,13 @@
 @import '~antd/lib/style/themes/default.less';
 
 .workout-icon {
-	padding: 5px;
-	border-radius: 5px;
-	margin: 5px;
+	padding: @padding-xss;
+	border-radius: @border-radius-base;
+	margin: @margin-xss;
+}
+
+.workout-icon.disabled {
+	opacity: 0.3;
 }
 
 .workout-icon.green {

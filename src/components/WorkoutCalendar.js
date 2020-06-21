@@ -2,39 +2,36 @@ import React from 'react';
 import moment from "moment";
 import { Calendar, Row, Col } from 'antd';
 
-import { faDumbbell, faRunning } from '@fortawesome/free-solid-svg-icons';
-
 import { WorkoutIcon } from './WorkoutIcon';
 
-import { ColorPallete } from '../colors';
+import type { Moment, Workout } from './types';
 
 type Props = {|
-  workouts: Array<Workouts>
+  workouts: Array<Workout>
 |};
 
-type Workouts = {|
-  date: Date,
-  icon: String,
-|};
+function matchDateToMoment(date: Date, dateMoment: Moment) {
+  return moment(date).format('MM/DD/YYYY') === dateMoment.format('MM/DD/YYYY');
+}
 
 export const WorkoutCalendar = (props: Props) => {
-  const dateCellRender = (date: Date) => {
-    // if (moment(date).format('L') === '06/11/2020') {
-    //   return (
-    //     <Row style={{height: "inherit"}} justify="end" align="bottom">
-    //       <Col>
-    //         <FontAwesomeIcon className="workout" icon={faDumbbell} size="3x"/>
-    //       </Col>
-    //     </Row>
-    //   );
-    // }
-    const r = Math.floor(Math.random() * 5)
-    const hex = Object.keys(ColorPallete)[r];
-    const icon = r % 2 ? faRunning : faDumbbell;
+  const month = moment().month();
+  const disableDate = (date: Date) => date.getMonth() !== month;
+
+  const dateCellRender = (date: Moment) => {
+    const workout = props.workouts.find(w => matchDateToMoment(w.date, date));
+    if (!workout) {
+      return;
+    }
     return (
       <Row style={{height: "inherit"}} justify="end" align="bottom">
         <Col>
-          <WorkoutIcon color={hex} icon={icon} />
+          <WorkoutIcon
+            disabled={disableDate(workout.date)}
+            color={workout.color}
+            icon={workout.icon}
+            size="3x"
+          />
         </Col>
       </Row>
     );
