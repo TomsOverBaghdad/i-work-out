@@ -1,20 +1,74 @@
 import React from 'react';
 import moment from "moment";
-import { Calendar, Row, Col } from 'antd';
+import {
+  Calendar,
+  Row,
+  Col,
+  Space,
+  Statistic,
+  Layout,
+  Typography
+} from 'antd';
 
+import { matchDateToMoment } from '../utils';
 import { WorkoutIcon } from './WorkoutIcon';
 
 import type { Moment, Workout } from './types';
 
-type Props = {|
+const { Content } = Layout;
+const { Title } = Typography;
+
+type CalendarProps = {|
   workouts: Array<Workout>
 |};
 
-function matchDateToMoment(date: Date, dateMoment: Moment) {
-  return moment(date).format('MM/DD/YYYY') === dateMoment.format('MM/DD/YYYY');
-}
+type WorkoutTotalsProps = {|
+  workouts: Array<Workout>
+|};
 
-export const WorkoutCalendar = (props: Props) => {
+const GOAL = 16;
+
+const WorkoutTotals = (props: WorkoutTotalsProps) => {
+  const workoutTotals = {};
+  props.workouts.forEach((workout) => {
+    if (!workoutTotals[workout.name]) {
+      workoutTotals[workout.name] = {
+        workout,
+        total: 0
+      };
+    }
+    workoutTotals[workout.name].total += 1;
+  })
+  const workoutTotalsValues = Object.values(workoutTotals);
+  const total = workoutTotalsValues.reduce((acc, curr) => acc + curr.total, 0);
+
+  return (
+    <Space size="large">
+      <Statistic
+        style={{'width': '100px'}}
+        title="Total"
+        value={total}
+        suffix={`/ ${GOAL}`} />
+      {workoutTotalsValues.map((workoutTotal, i) => (
+        <React.Fragment key={`workout-total-${i}`}>
+          <Statistic
+            style={{minWidth: '100px'}}
+            title={workoutTotal.workout.name}
+            prefix={
+              <WorkoutIcon
+                color={workoutTotal.workout.color}
+                icon={workoutTotal.workout.icon}
+                size="1x"
+              />
+            }
+            value={workoutTotal.total} />
+        </React.Fragment>
+      ))}
+    </Space>
+  );
+};
+
+const WorkoutCalendar = (props: CalendarProps) => {
   const month = moment().month();
   const disableDate = (date: Date) => date.getMonth() !== month;
 
@@ -43,3 +97,13 @@ export const WorkoutCalendar = (props: Props) => {
     </React.Fragment>
   );
 };
+
+export const WorkoutCalendarLayout = (props: CalendarProps) => (
+  <Layout className="site-layout-background" style={{ margin: '50px' }}>
+    <Content style={{ padding: '24px 48px' }}>
+      <Title> Workout Calendar </Title>
+      <WorkoutTotals {...props} />
+      <WorkoutCalendar {...props} />
+    </Content>
+   </Layout>
+)

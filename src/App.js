@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { Layout, Menu, Divider, Space } from 'antd';
+import { Layout, Menu } from 'antd';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faDumbbell, faRunning, faPeopleCarry } from '@fortawesome/free-solid-svg-icons';
 
-import { WorkoutCalendar } from './components/WorkoutCalendar';
-import { WorkoutTotals } from './components/WorkoutTotals';
+import { WorkoutCalendarLayout } from './components/WorkoutCalendar';
+import { StartWorkoutLayout } from './components/StartWorkout';
 
 import './App.less';
 
 // TEST IMPORTS
-import { generateTestWorkouts } from './testData';
+import { generateTestWorkout, generateTestWorkouts } from './testData';
 //
 
 
@@ -21,11 +21,13 @@ import { generateTestWorkouts } from './testData';
 library.add(faDumbbell, faRunning, faPeopleCarry);
 
 
-const { Header, Content } = Layout;
+const { Header } = Layout;
 
 // TEST DATA
 const testWorkouts = generateTestWorkouts();
+const testWorkout = generateTestWorkout(0);
 //
+
 
 const App = () => (
   <React.Fragment>
@@ -38,17 +40,8 @@ const App = () => (
           <Menu.Item key="Start Workout">Start Workout</Menu.Item>
         </Menu>
       </Header>
-      <Content style={{ padding: '50px' }}>
-        <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
-          <Content style={{ padding: '0 24px', minHeight: 280 }}>
-            <Space>
-              <WorkoutCalendar workouts={testWorkouts} />
-              <Divider type="vertical" className="workout-calendar-divider" />
-              <WorkoutTotals workouts={testWorkouts} />
-            </Space>
-          </Content>
-        </Layout>
-      </Content>
+      <StartWorkoutLayout previousWorkouts={testWorkouts} workout={testWorkout}/>
+      {/*<WorkoutCalendarLayout workouts={testWorkouts} />*/}
     </Layout>
   </React.Fragment>
 );
