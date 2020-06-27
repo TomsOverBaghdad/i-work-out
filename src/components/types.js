@@ -6,6 +6,8 @@ Exercise Types
 	run: time and distance
 */
 export type Exercise = {|
+	id: string
+	date: Date, //date done
 	name: string,
 	type: string,
 	time: Date,
@@ -15,7 +17,7 @@ export type Exercise = {|
 |};
 
 export type Workout = {|
-  date: Date,
+  date: Date, //date done
   icon: string,
   color: string,
   name: string,

@@ -7,7 +7,8 @@ import {
   Space,
   Statistic,
   Layout,
-  Typography
+  Typography,
+  Button,
 } from 'antd';
 
 import { matchDateToMoment } from '../utils';
@@ -101,7 +102,17 @@ const WorkoutCalendar = (props: CalendarProps) => {
 export const WorkoutCalendarLayout = (props: CalendarProps) => (
   <Layout className="site-layout-background" style={{ margin: '50px' }}>
     <Content style={{ padding: '24px 48px' }}>
-      <Title> Workout Calendar </Title>
+      <Title>
+        Workout Calendar
+        <Button
+          className="float-right"
+          size="large"
+          type="primary"
+          style={{marginTop: '3px'}}
+        >
+          Start Workout
+        </Button>
+      </Title>
       <WorkoutTotals {...props} />
       <WorkoutCalendar {...props} />
     </Content>

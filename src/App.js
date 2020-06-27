@@ -25,9 +25,10 @@ const { Header } = Layout;
 
 // TEST DATA
 const testWorkouts = generateTestWorkouts();
-const testWorkout = generateTestWorkout(0);
+const testWorkout = generateTestWorkout(0, null, false);
 //
-
+// <StartWorkoutLayout previousWorkouts={testWorkouts} workout={testWorkout}/>
+// <WorkoutCalendarLayout workouts={testWorkouts} />
 
 const App = () => (
   <React.Fragment>
@@ -41,7 +42,6 @@ const App = () => (
         </Menu>
       </Header>
       <StartWorkoutLayout previousWorkouts={testWorkouts} workout={testWorkout}/>
-      {/*<WorkoutCalendarLayout workouts={testWorkouts} />*/}
     </Layout>
   </React.Fragment>
 );
