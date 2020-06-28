@@ -244,33 +244,30 @@ export const StartWorkoutLayout = (props: CalendarProps) => {
   );
 
   const SelectWorkout = () => {
-    const WorkoutIconDropdown = ({color, icon}) => (
-      <WorkoutIcon
-        color={color}
-        icon={icon}
-        size="xs"
-      />
-    );
-
     //<Menu onClick={handleMenuClick}>
     const menu = (
       <Menu>
         {Exercises.map((e, i) => (
-          <Menu.Item key={i} icon={<WorkoutIcon color={e.color} icon={e.icon} />}>
-            {e.name}
+          <Menu.Item key={i}>
+            <Space>
+              <div style={{width: '35px'}}>
+                <WorkoutIcon color={e.color} icon={e.icon} size="2x"/>
+              </div>
+              {e.name}
+            </Space>
           </Menu.Item>
         ))}
       </Menu>
     );
 
     return (
-      <Space>
+      <div className="flex-container select-workout-wrapper">
         <Dropdown overlay={menu}>
-          <Button>
-            Button <DownOutlined />
+          <Button size="large">
+            Select Workout <DownOutlined />
           </Button>
         </Dropdown>
-      </Space>
+      </div>
     );
   }
 
