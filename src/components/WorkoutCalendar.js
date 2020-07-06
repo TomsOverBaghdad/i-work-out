@@ -50,18 +50,12 @@ const WorkoutTotals = (props: WorkoutTotalsProps) => {
         title="Total"
         value={total}
         suffix={`/ ${GOAL}`} />
-      {workoutTotalsValues.map((workoutTotal, i) => (
-        <React.Fragment key={`workout-total-${i}`}>
+      {workoutTotalsValues.map((workoutTotal) => (
+        <React.Fragment key={workoutTotal.workout.name}>
           <Statistic
             style={{minWidth: '100px'}}
             title={workoutTotal.workout.name}
-            prefix={
-              <WorkoutIcon
-                color={workoutTotal.workout.color}
-                icon={workoutTotal.workout.icon}
-                size="1x"
-              />
-            }
+            prefix={<WorkoutIcon workout={workoutTotal.workout} size="1x" />}
             value={workoutTotal.total} />
         </React.Fragment>
       ))}
@@ -70,8 +64,9 @@ const WorkoutTotals = (props: WorkoutTotalsProps) => {
 };
 
 const WorkoutCalendar = (props: CalendarProps) => {
-  const month = moment().month();
-  const disableDate = (date: Date) => date.getMonth() !== month;
+  const currentMoment = moment();
+  const disableDate = (date: Date) =>
+    date.getMonth() !== currentMoment.month() && date.getYear() !== currentMoment.year();
 
   const dateCellRender = (date: Moment) => {
     const workout = props.workouts.find(w => matchDateToMoment(w.date, date));
@@ -83,8 +78,7 @@ const WorkoutCalendar = (props: CalendarProps) => {
         <Col>
           <WorkoutIcon
             disabled={disableDate(workout.date)}
-            color={workout.color}
-            icon={workout.icon}
+            workout={workout}
             size="3x"
           />
         </Col>

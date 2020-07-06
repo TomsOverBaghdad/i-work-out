@@ -73,7 +73,7 @@ const ShouldersAndArms = () => ({
 	],
 });
 
-export const Exercises = [
+export const Workouts = [
 	Run(),
 	ChestAndBack(),
 	ShouldersAndArms()

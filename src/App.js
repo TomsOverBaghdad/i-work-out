@@ -25,14 +25,14 @@ const { Header } = Layout;
 
 // TEST DATA
 const testWorkouts = generateTestWorkouts();
-const testWorkout = generateTestWorkout(0, null, false);
+// const testWorkout = generateTestWorkout(0, null, false);
 //
 // <StartWorkoutLayout previousWorkouts={testWorkouts} workout={testWorkout}/>
 // <WorkoutCalendarLayout workouts={testWorkouts} />
 
 const App = () => (
   <React.Fragment>
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{minHeight: '100vh'}}>
       <Header className="header">
         <div className="logo" />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['Calendar']}>
@@ -41,7 +41,7 @@ const App = () => (
           <Menu.Item key="Start Workout">Start Workout</Menu.Item>
         </Menu>
       </Header>
-      <StartWorkoutLayout previousWorkouts={testWorkouts} workout={testWorkout}/>
+      <StartWorkoutLayout previousWorkouts={testWorkouts}/>
     </Layout>
   </React.Fragment>
 );
