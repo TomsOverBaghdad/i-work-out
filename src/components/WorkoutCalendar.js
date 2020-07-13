@@ -46,14 +46,14 @@ const WorkoutTotals = (props: WorkoutTotalsProps) => {
   return (
     <Space size="large">
       <Statistic
-        style={{'width': '100px'}}
+        style={{'width': 100}}
         title="Total"
         value={total}
         suffix={`/ ${GOAL}`} />
       {workoutTotalsValues.map((workoutTotal) => (
         <React.Fragment key={workoutTotal.workout.name}>
           <Statistic
-            style={{minWidth: '100px'}}
+            style={{minWidth: 100}}
             title={workoutTotal.workout.name}
             prefix={<WorkoutIcon workout={workoutTotal.workout} size="1x" />}
             value={workoutTotal.total} />
@@ -94,7 +94,7 @@ const WorkoutCalendar = (props: CalendarProps) => {
 };
 
 export const WorkoutCalendarLayout = (props: CalendarProps) => (
-  <Layout className="site-layout-background" style={{ margin: '50px' }}>
+  <Layout className="site-layout-background" style={{ margin: 50 }}>
     <Content style={{ padding: '24px 48px' }}>
       <Title>
         Workout Calendar
@@ -102,7 +102,7 @@ export const WorkoutCalendarLayout = (props: CalendarProps) => (
           className="float-right"
           size="large"
           type="primary"
-          style={{marginTop: '3px'}}
+          style={{marginTop: 3}}
         >
           Start Workout
         </Button>

@@ -6,19 +6,19 @@ import {
 } from 'antd';
 import {dateToString} from '../utils';
 
-export const RenderExercise = ({exercise, isActive}) => {
+export const RenderExercise = ({exercise, isActive, form}) => {
   let className = "exercise-list-item";
   className += isActive ? "" : " previous-exercise";
 
   let ExerciseElement;
   if (exercise.type === "run") {
-    ExerciseElement = () => <RenderRun exercise={exercise} isActive={isActive} />;
+    ExerciseElement = () => <RenderRun exercise={exercise} isActive={isActive} form={form} />;
   } else if (exercise.type === "reps") {
-    ExerciseElement = () =>  <RenderReps exercise={exercise} isActive={isActive} />;
+    ExerciseElement = () =>  <RenderReps exercise={exercise} isActive={isActive} form={form} />;
   } else if (exercise.type === "timed") {
-    ExerciseElement = () =>  <RenderTimed exercise={exercise} isActive={isActive} />;
+    ExerciseElement = () =>  <RenderTimed exercise={exercise} isActive={isActive} form={form} />;
   }else if (exercise.type === "weight") {
-    ExerciseElement = () =>  <RenderWeight exercise={exercise} isActive={isActive} />;
+    ExerciseElement = () =>  <RenderWeight exercise={exercise} isActive={isActive} form={form} />;
   }
 
   return (
@@ -28,22 +28,27 @@ export const RenderExercise = ({exercise, isActive}) => {
   );
 };
 
-const RenderRun = ({exercise, isActive}) => (
+const onFinish = (values) => {
+  console.log({values})
+}
+
+const RenderRun = ({exercise, isActive, form}) => (
   <Form
    layout="inline"
+   form={isActive && form}
    initialValues={{ time: exercise.time, distance: exercise.distance }}
-   // onValuesChange={onFormLayoutChange}
+   onFinish={onFinish}
   >
     <Form.Item label="Date">
       <span className="ant-form-text workout-date">{dateToString(exercise.date)}</span>
     </Form.Item>
-    <Form.Item label="Time" name="time">
+    <Form.Item label="Time" name="time" rules={[{ required: isActive, message: 'Do your workout!' }]}>
       <TimePicker
         format="mm:ss"
         disabled={!isActive}
       />
     </Form.Item>
-    <Form.Item label="Distance" name="distance">
+    <Form.Item label="Distance" name="distance" rules={[{ required: isActive, message: 'Do your workout!' }]}>
       <InputNumber
         step="0.1"
         formatter={value => `${value} mi`}
@@ -54,16 +59,17 @@ const RenderRun = ({exercise, isActive}) => (
   </Form>
 );
 
-const RenderReps = ({exercise, isActive}) => (
+const RenderReps = ({exercise, isActive, form}) => (
   <Form
    layout="inline"
+   form={isActive && form}
    initialValues={{ reps: exercise.reps }}
-   // onValuesChange={onFormLayoutChange}
+   onFinish={onFinish}
   >
     <Form.Item label="Date">
       <span className="ant-form-text workout-date">{dateToString(exercise.date)}</span>
     </Form.Item>
-    <Form.Item label="Reps" name="reps">
+    <Form.Item label="Reps" name="reps" rules={[{ required: isActive, message: 'Do your workout!' }]}>
       <InputNumber
         step="1"
         disabled={!isActive}
@@ -72,22 +78,23 @@ const RenderReps = ({exercise, isActive}) => (
   </Form>
 );
 
-const RenderWeight = ({exercise, isActive}) => (
+const RenderWeight = ({exercise, isActive, form}) => (
   <Form
    layout="inline"
+   form={isActive && form}
    initialValues={{ reps: exercise.reps, weight: exercise.weight }}
-   // onValuesChange={onFormLayoutChange}
+   onFinish={onFinish}
   >
     <Form.Item label="Date">
       <span className="ant-form-text workout-date">{dateToString(exercise.date)}</span>
     </Form.Item>
-    <Form.Item label="Reps" name="reps">
+    <Form.Item label="Reps" name="reps" rules={[{ required: isActive, message: 'Do your workout!' }]}>
       <InputNumber
         step="1"
         disabled={!isActive}
       />
     </Form.Item>
-    <Form.Item label="Weight" name="weight">
+    <Form.Item label="Weight" name="weight" rules={[{ required: isActive, message: 'Do your workout!' }]}>
       <InputNumber
         step="1"
         formatter={value => `${value} lbs`}
@@ -98,16 +105,17 @@ const RenderWeight = ({exercise, isActive}) => (
   </Form>
 );
 
-const RenderTimed = ({exercise, isActive}) => (
+const RenderTimed = ({exercise, isActive, form}) => (
   <Form
    layout="inline"
+   form={isActive && form}
    initialValues={{ time: exercise.time }}
-   // onValuesChange={onFormLayoutChange}
+   onFinish={onFinish}
   >
     <Form.Item label="Date">
       <span className="ant-form-text workout-date">{dateToString(exercise.date)}</span>
     </Form.Item>
-    <Form.Item label="Time" name="time">
+    <Form.Item label="Time" name="time" rules={[{ required: isActive, message: 'Do your workout!' }]}>
       <TimePicker
         format="mm:ss"
         disabled={!isActive}

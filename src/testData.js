@@ -3,7 +3,7 @@ import moment from "moment";
 import { ColorPallete } from './colors';
 import { generateUUID } from './utils';
 
-export function generateTestExcercise(i, order, date, fillData) {
+export function generateTestExcercise(i, order, date = null, fillData = null) {
 	if (!date) {
 		date = moment();
 	}
@@ -140,6 +140,6 @@ export function generateTestWorkouts() {
     workouts.push(generateTestWorkout(r, date));
     day++; //Math.ceil(Math.random() * 2);
   }
-
+  console.log({workouts})
   return workouts;
 };

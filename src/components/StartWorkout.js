@@ -1,25 +1,19 @@
 import React, { useState } from 'react';
-import moment from "moment";
+
 import {
   Button,
-  Space,
   Layout,
   Typography,
   Divider,
   List,
-  Form,
-  InputNumber,
-  TimePicker,
   Steps,
-  Dropdown,
-  Menu,
   Select,
+  Form,
 } from 'antd';
-import { LoadingOutlined, CheckCircleTwoTone, DownOutlined } from '@ant-design/icons';
+import { LoadingOutlined, CheckCircleTwoTone } from '@ant-design/icons';
 
 import { WorkoutIcon } from './WorkoutIcon';
 import { RenderExercise } from './ExerciseForms';
-import { dateToString } from '../utils';
 import { ExerciseStatus, Workouts } from '../Exercise';
 import { ColorPallete } from '../colors';
 
@@ -30,11 +24,11 @@ const { Title } = Typography;
 const { Step } = Steps;
 const { Option } = Select;
 
-const WorkoutFormList = ({currentExercise, currentExerciseIndex, previousWorkouts}) => {
+const WorkoutFormList = ({form, currentExercise, currentExerciseIndex, previousWorkouts}) => {
   currentExercise.active = true;
-  currentExercise.status = ExerciseStatus.InProgress;
-  console.log("test", {currentExercise})
   const previousExercises = previousWorkouts.map(w => w.exercises[currentExerciseIndex]);
+  console.log({w_count: previousWorkouts.length, e_count: previousExercises.length})
+  console.log({diff: currentExercise, diff2: previousExercises[0]})
   const exercises = previousExercises
     .concat(currentExercise)
     .sort((a, b) => b.date - a.date);
@@ -49,7 +43,7 @@ const WorkoutFormList = ({currentExercise, currentExerciseIndex, previousWorkout
         rowKey='id'
         renderItem={exercise => (
           <List.Item>
-            <RenderExercise exercise={exercise} isActive={exercise.active} />
+            <RenderExercise exercise={exercise} isActive={exercise.active} form={form} />
           </List.Item>
         )}
       />
@@ -58,7 +52,6 @@ const WorkoutFormList = ({currentExercise, currentExerciseIndex, previousWorkout
 };
 
 const WorkoutSteps = ({exercises, currentExerciseIndex}) => {
-  console.log(exercises)
   const getProgressDot = (exerciseIndex) => {
     if (exerciseIndex === currentExerciseIndex) {
       return <LoadingOutlined style={{color: ColorPallete['blue']}}/>;
@@ -79,7 +72,7 @@ const WorkoutSteps = ({exercises, currentExerciseIndex}) => {
 
   return (
     <div className="workout-steps">
-      <Steps direction="vertical">
+      <Steps direction="vertical" current={currentExerciseIndex}>
         {exercises.map((exercise, i) => (
           <Step
             key={i}
@@ -95,7 +88,6 @@ const WorkoutSteps = ({exercises, currentExerciseIndex}) => {
 
 const SelectWorkout = ({setSelectedWorkout}) => {
   const handleWorkoutChange = (value) => {
-    console.log("workout onChange", {value})
     setSelectedWorkout(Workouts[value]);
   };
 
@@ -123,20 +115,26 @@ const SelectWorkout = ({setSelectedWorkout}) => {
 export const StartWorkoutLayout = ({previousWorkouts}) => {
   const [currentExerciseIndex, setCurrentExercise] = useState(0);
   const [selectedWorkout, setSelectedWorkout] = useState();
+  const [form] = Form.useForm();
 
   function buttonNextonClick(event) {
-    console.log(event);
+    console.log('submit')
+    const x = form.submit();
+    console.log({submit: x})
+    console.log('setCurrentExercise')
+    setCurrentExercise(currentExerciseIndex + 1);
   }
 
   const WorkoutTitle = () => (
     <Title>
       <WorkoutIcon workout={selectedWorkout} size="1x" />
-      <span style={{paddingLeft: 5}}>{selectedWorkout.name}</span>
+      <span style={{paddingLeft: 14}}>{selectedWorkout.name}</span>
       <Button
         className="float-right"
         size="large"
         type="primary"
-        style={{marginTop: '3px'}}
+        htmlType="submit"
+        style={{marginTop: 3}}
         onClick={buttonNextonClick}
       >
         Next
@@ -145,12 +143,10 @@ export const StartWorkoutLayout = ({previousWorkouts}) => {
   );
 
   const ShowContent = () => {
-    console.log('Show Content', {selectedWorkout});
-
     if (selectedWorkout) {
       const previousCurrentWorkouts = previousWorkouts
         .filter(w => w.name === selectedWorkout.name);
-
+      console.log(selectedWorkout)
       return (
         <React.Fragment>
           <WorkoutTitle />
@@ -161,19 +157,24 @@ export const StartWorkoutLayout = ({previousWorkouts}) => {
             />
             <Divider className="workout-divider" type="vertical" />
             <WorkoutFormList
+              form={form}
               currentExercise={selectedWorkout.exercises[currentExerciseIndex]}
               previousWorkouts={previousCurrentWorkouts}
               currentExerciseIndex={currentExerciseIndex}
             />
           </div>
         </React.Fragment>
-      )
+      );
     }
-    return <SelectWorkout setSelectedWorkout={setSelectedWorkout} />
+    return (
+      <div className="select-workout-wrapper">
+        <SelectWorkout setSelectedWorkout={setSelectedWorkout} />
+      </div>
+    );
   };
 
   return (
-    <Layout className="site-layout-background" style={{ margin: '50px' }}>
+    <Layout className="site-layout-background" style={{ margin: 50 }}>
       <Content style={{ padding: '24px 48px' }}>
         <ShowContent />
       </Content>

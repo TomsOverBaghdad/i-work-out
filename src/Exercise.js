@@ -1,6 +1,7 @@
 import moment from "moment";
 
-import { ColorPallete } from './colors';
+import { generateUUID } from './utils';
+// import { ColorPallete } from './colors';
 
 //test data
 import { generateTestExcercise } from './testData';
@@ -23,13 +24,15 @@ export const Types = {
 	]
 };
 
-const Run = () => ({
+const Run = (date) => ({
 	name: 'Run',
 	icon: 'running',
 	color: 'green',
-	date: moment(),
+	date: date,
 	exercises: [
 		{
+			id: generateUUID(""),
+			date: date,
 			name: 'Run',
 			type: 'run',
 			distance: null,
@@ -38,11 +41,11 @@ const Run = () => ({
 	],
 });
 
-const ChestAndBack = () => ({
+const ChestAndBack = (date) => ({
 	name: 'Chest & Back',
 	icon: 'dumbbell',
 	color: 'dark-blue',
-	date: moment(),
+	date: date,
 	exercises: [
 		generateTestExcercise(1, 1),
 		generateTestExcercise(4, 2),
@@ -55,11 +58,11 @@ const ChestAndBack = () => ({
 	],
 });
 
-const ShouldersAndArms = () => ({
+const ShouldersAndArms = (date) => ({
 	name: "Shoulders & Arms",
 	icon: 'people-carry',
 	color: 'blue',
-	date: moment(),
+	date: date,
 	exercises: [
 		generateTestExcercise(2, 1),
 		generateTestExcercise(7, 2),
@@ -74,9 +77,9 @@ const ShouldersAndArms = () => ({
 });
 
 export const Workouts = [
-	Run(),
-	ChestAndBack(),
-	ShouldersAndArms()
+	Run(moment().toDate()),
+	ChestAndBack(moment().toDate()),
+	ShouldersAndArms(moment().toDate())
 ]
 
 
