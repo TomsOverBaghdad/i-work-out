@@ -8,6 +8,7 @@ import { faDumbbell, faRunning, faPeopleCarry } from '@fortawesome/free-solid-sv
 import { WorkoutCalendarLayout } from './components/WorkoutCalendar';
 import { StartWorkoutLayout } from './components/StartWorkout';
 
+import logo from './logo.svg';
 import './App.less';
 
 // TEST IMPORTS
