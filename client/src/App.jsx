@@ -8,12 +8,6 @@ import { Loader } from './components/common/Loading';
 
 import { useAuth } from './useAuth';
 
-
-// import { WorkoutCalendarLayout } from './components/WorkoutCalendar';
-// import { StartWorkoutLayout } from './components/StartWorkout';
-
-// TEST IMPORTS
-// import { generateTestWorkout, generateTestWorkouts } from './testData';
 /**
  * Example to get shared code
  * https://medium.com/frontend-digest/using-create-react-app-in-a-monorepo-a4e6f25be7aa

@@ -4,7 +4,7 @@ import {
   InputNumber,
   TimePicker,
 } from 'antd';
-import {dateToString} from '../utils';
+import {dateToString} from '../../utils';
 
 export const RenderExercise = ({exercise, isActive, form}) => {
   let className = "exercise-list-item";

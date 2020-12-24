@@ -20,6 +20,14 @@ export const ClientRoutes = {
 	signOut: () => '/sign-out',
 	register: () => '/register',
 	account: () => '/account',
+	workouts: () => {
+		const base = '/workouts';
+		return {
+			all: () => `${base}`,
+			new: () => `${base}/new`,
+			id: () => `${base}/id`,
+		};
+	},
 	// *** example *** 
 	// projectEstimateNew: (projectId = ':projectId') =>
 	// 	`/projects/${projectId}/estimate/new`,

@@ -4,14 +4,15 @@ import {
 	Calendar,
 	Row,
 	Col,
-	Space,
 	Statistic,
 	Typography,
 	Button,
 } from 'antd';
 
-import { matchDateToMoment } from '../../utils';
+import { StartWorkoutButton } from './StartWorkoutButton';
 import { WorkoutIcon } from './WorkoutIcon';
+
+import { matchDateToMoment } from '../../utils';
 
 import './WorkoutCalendar.less';
 
@@ -19,6 +20,9 @@ const { Title } = Typography;
 
 const GOAL = 16;
 
+const workoutTotalClass = {
+	minWidth: 125, marginRight: 16,
+}
 export const WorkoutTotals = (props) => {
 	const workoutTotals = {};
 	props.workouts.forEach((workout) => {
@@ -34,16 +38,16 @@ export const WorkoutTotals = (props) => {
 	const total = workoutTotalsValues.reduce((acc, curr) => acc + curr.total, 0);
 
 	return (
-		<div style={{ display: 'flex', flexWrap: 'wrap' }}>
+		<div style={{ display: 'flex', flexWrap: 'wrap'}}>
 			<Statistic
-				style={{ 'width': 100, marginRight: 16 }}
+				style={workoutTotalClass}
 				title="Total"
 				value={total}
 				suffix={`/ ${GOAL}`} />
 			{workoutTotalsValues.map((workoutTotal) => (
 				<Statistic
 					key={workoutTotal.workout.name}
-					style={{ minWidth: 100, marginRight: 16 }}
+					style={workoutTotalClass}
 					title={workoutTotal.workout.name}
 					prefix={<WorkoutIcon workout={workoutTotal.workout} size="1x" />}
 					value={workoutTotal.total} />
@@ -79,15 +83,8 @@ export const WorkoutCalendar = (props) => {
 };
 
 export const WorkoutCalendarTitle = (props) => (
-	<Title>
-		Workout Calendar
-		<Button
-			className="float-right"
-			size="large"
-			type="primary"
-			style={{ marginTop: 3 }}
-		>
-			Start Workout
-    </Button>
+	<Title level={2}>
+		Calendar
+		<StartWorkoutButton />
 	</Title>
 )

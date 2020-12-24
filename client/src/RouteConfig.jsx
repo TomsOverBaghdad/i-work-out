@@ -17,6 +17,8 @@ import SignOut from './components/SignOut';
 import Register from './components/Register';
 import Account from './components/Account';
 import Home from './components/Home';
+// import Workouts from './components/Workouts';
+import WorkoutsNew from './components/WorkoutsNew';
 
 import { ClientRoutes } from './routes';
 
@@ -88,14 +90,10 @@ export const RenderLoginRoutes = ({ children }) => {
 };
 const withLoginRoutes = (component) => () => <RenderLoginRoutes>{component}</RenderLoginRoutes>;
 
-// *** EXAMPLED ***
-// const PROJECT_ROUTES = [
-//   { path: ClientRoutes.project(), key: "PROJECT_ROOT", exact: true, component: withPage(<Project />) },
-//   { path: ClientRoutes.projectEstimateNew(), key: "PROJECT_ESTIMATE_NEW", exact: true, component: withPage(<EstimateNew />) },
-//   { path: ClientRoutes.projectEstimate(), key: "PROJECT_ESTIMATE", exact: true, component: withPage(<EstimateView />) },
-//   { path: ClientRoutes.projectWorkProposal(), key: "PROJECT_WORK_PROPOSAL", exact: true, component: withPage(<WorkProposal />) },
-//   { path: ClientRoutes.projectServiceAgreement(), key: "PROJECT_SERVICE_AGREEMENT", exact: true, component: withPage(<ServiceAgreement />) },
-// ];
+const WORKOUTS_ROUTES = [
+//   { path: ClientRoutes.workouts().all(), key: "WORKOUTS_ROOT", exact: true, component: withPage(<Workouts />) },
+  { path: ClientRoutes.workouts().new(), key: "WORKOUTS_NEW", exact: true, component: withPage(<WorkoutsNew />) },
+];
 
 const ACCOUNT_ROUTES = [
 	{ path: ClientRoutes.account(), key: "ACCOUNT_ROOT", exact: true, component: withPage(<Account />) },
@@ -112,6 +110,5 @@ export const ROUTES = [
 	{ path: ClientRoutes.register(), key: "REGISTER", exact: true, component: withLoginRoutes(<Page><Register /></Page>) },
 	{ path: ClientRoutes.signOut(), key: "SIGN_OUT", exact: true, component: withPage(<SignOut />) },
 	{ path: ClientRoutes.account(), key: "ACCOUNT", component: RenderAuthRoutes, routes: ACCOUNT_ROUTES },
-	// *** EXAMPLED ***
-	// { path: ClientRoutes.project(), key: "PROJECT", component: RenderAuthRoutes, routes: PROJECT_ROUTES },
+	{ path: ClientRoutes.workouts().all(), key: "WORKOUTS", component: RenderAuthRoutes, routes: WORKOUTS_ROUTES },
 ];

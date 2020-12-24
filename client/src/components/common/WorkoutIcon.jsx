@@ -5,6 +5,7 @@ import './WorkoutIcon.less';
 
 export const WorkoutIcon = ({ workout, size, disabled }) => {
 	const disabledClass = disabled ? 'disabled' : '';
+
 	return (
 		<FontAwesomeIcon
 			style={{ backgroundColor: workout.color, color: 'white' }}
