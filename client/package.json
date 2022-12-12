@@ -15,7 +15,7 @@
     "craco-less": "^1.17.0",
     "downloadjs": "^1.4.7",
     "mathjs": "^8.0.1",
-    "qs": "^6.9.4",
+    "qs": "^6.7.3",
     "react": "^16.13.1",
     "react-async-hook": "^3.6.1",
     "react-dom": "^16.13.1",
